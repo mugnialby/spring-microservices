@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
     public void add(AddUserRequest request) {
         validationService.validate(request);
 
-        if (userRepository.existsByUserName(request.getUserName()))
+        if (userRepository.existsByUsername(request.getUsername()))
         throw new ResponseStatusException(HttpStatus.CONFLICT);
 
         userRepository.save(new UsersUtil().mapAddRequestToUsers(request));
@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService {
             
         if (Objects.nonNull(request.getUsername())) {
             if (!request.getUsername().equalsIgnoreCase(userFromDb.getUsername())
-                && userRepository.existsByUserName(request.getUsername())) {
+                && userRepository.existsByUsername(request.getUsername())) {
                 throw new ResponseStatusException(HttpStatus.CONFLICT);
             }
 

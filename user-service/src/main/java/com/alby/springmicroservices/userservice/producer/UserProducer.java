@@ -1,5 +1,6 @@
 package com.alby.springmicroservices.userservice.producer;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
@@ -16,6 +17,9 @@ import lombok.extern.slf4j.Slf4j;
 public class UserProducer {
 
     private KafkaTemplate<String, String> kafkaTemplate;
+    
+    @Value("${kafka.topic.user.events}")
+    private String userEventsTopic;
 
     public <T> void sendMessage(T user) {
         Message<T> message = MessageBuilder
@@ -26,7 +30,7 @@ public class UserProducer {
             ).build();
 
         log.info(String.format("Message sent %s", message));
-        kafkaTemplate.send(message);
+        kafkaTemplate.send(userEventsTopic, message.toString());
     }
 
     public <T> void sendMessage(Page<T> users) {

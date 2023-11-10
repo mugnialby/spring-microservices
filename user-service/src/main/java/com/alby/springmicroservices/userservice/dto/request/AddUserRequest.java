@@ -15,7 +15,7 @@ public class AddUserRequest {
 
     @NotBlank
     @Size(max = 64)
-    private String userName;
+    private String username;
 
     @NotBlank
     @Size(max = 128)

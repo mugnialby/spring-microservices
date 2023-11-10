@@ -27,7 +27,7 @@ public class UsersUtil {
 
     public User mapAddRequestToUsers(AddUserRequest request) {
         return User.builder()
-            .username(request.getUserName())
+            .username(request.getUsername())
             .password(BCrypt.hashpw(request.getPassword(), BCrypt.gensalt()))
             .firstName(request.getFirstName())
             .lastName(request.getLastName())
