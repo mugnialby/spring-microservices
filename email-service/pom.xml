@@ -7,9 +7,9 @@
 		<artifactId>spring-microservices</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>user-service</artifactId>
+	<artifactId>email-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>user-service</name>
+	<name>email-service</name>
 	<description>Backend User Service Utilizing Spring Boot</description>
 	<properties>
 		<java.version>21</java.version>
