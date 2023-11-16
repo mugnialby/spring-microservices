@@ -2,6 +2,7 @@ package com.alby.userservice.controller;
 
 import java.util.List;
 
+import com.alby.springmicroservices.dto.response.WebResponse;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +12,6 @@ import com.alby.userservice.dto.request.UserGetRequest;
 import com.alby.userservice.dto.request.UserPagingRequest;
 import com.alby.userservice.dto.request.UserUpdateRequest;
 import com.alby.userservice.dto.response.UserResponse;
-import com.alby.userservice.dto.response.WebResponse;
 import com.alby.userservice.service.UserService;
 
 import lombok.RequiredArgsConstructor;

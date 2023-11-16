@@ -1,0 +1,28 @@
+package com.alby.patientservice.util;
+
+import com.alby.patientservice.entity.Patients;
+import com.alby.patientservice.dto.request.PatientAddRequest;
+import com.alby.patientservice.dto.response.PatientResponse;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
+
+@NoArgsConstructor
+@Builder
+public class PatientsUtil {
+    
+    public static PatientResponse mapPatientToPatientResponse(Patients Patient) {
+        return PatientResponse.builder()
+                .id(Patient.getId())
+                // .name(Patient.getName())
+                .status(Patient.getStatus())
+                .build();
+    }
+
+    public static Patients mapAddRequestToPatients(PatientAddRequest request) {
+        return Patients.builder()
+                // .name(request.getName())
+                .createdBy(request.getCreatedBy())
+                .build();
+    }
+}

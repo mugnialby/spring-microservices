@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import com.alby.springmicroservices.dto.response.WebResponse;
+import com.alby.springmicroservices.service.ValidationService;
 import com.alby.userservice.security.BCrypt;
 import com.alby.userservice.util.UserUtil;
 import org.springframework.data.domain.Page;
@@ -20,11 +22,9 @@ import com.alby.userservice.dto.request.UserGetRequest;
 import com.alby.userservice.dto.request.UserPagingRequest;
 import com.alby.userservice.dto.request.UserUpdateRequest;
 import com.alby.userservice.dto.response.UserResponse;
-import com.alby.userservice.dto.response.WebResponse;
 import com.alby.userservice.entity.Users;
 import com.alby.userservice.repository.UserRepository;
 import com.alby.userservice.service.UserService;
-import com.alby.userservice.service.ValidationService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -146,7 +146,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
 
         return WebResponse.<String> builder()
-                .data("OK")
+                .message("OK")
                 .build();
     }
     

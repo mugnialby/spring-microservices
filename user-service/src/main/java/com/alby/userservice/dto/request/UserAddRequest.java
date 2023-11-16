@@ -1,7 +1,6 @@
 package com.alby.userservice.dto.request;
 
 import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -28,7 +27,6 @@ public class UserAddRequest {
     @Length(max = 128)
     private String firstName;
 
-    @NotBlank
     @Length(max = 128)
     private String lastName;
 

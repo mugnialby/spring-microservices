@@ -4,11 +4,11 @@ import com.alby.feedbackservice.dto.request.FeedbackAddRequest;
 import com.alby.feedbackservice.dto.request.FeedbackGetRequest;
 import com.alby.feedbackservice.dto.request.FeedbackPagingRequest;
 import com.alby.feedbackservice.dto.response.FeedbackResponse;
-import com.alby.feedbackservice.dto.response.WebResponse;
+import com.alby.springmicroservices.dto.response.WebResponse;
 import com.alby.feedbackservice.entity.Feedback;
 import com.alby.feedbackservice.repository.FeedbackRepository;
 import com.alby.feedbackservice.service.FeedbackService;
-import com.alby.feedbackservice.service.ValidationService;
+import com.alby.springmicroservices.service.ValidationService;
 import com.alby.feedbackservice.util.FeedbackUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -73,7 +73,7 @@ public class FeedbackServiceImpl implements FeedbackService {
         feedbackRepository.save(feedback);
 
         return WebResponse.<String> builder()
-                .data("OK")
+                .message("OK")
                 .build();
     }
 }

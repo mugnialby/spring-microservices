@@ -19,8 +19,16 @@
 	</properties>
 
 	<modules>
+		<!-- MASTER DATA MODULES -->
 		<module>user-service</module>
+		<module>role-service</module>
+		<module>patient-service</module>
+
+		<!-- TRANSACTIONAL MODULES -->
 		<module>feedback-service</module>
+		<module>admission-service</module>
+
+		<!-- STATELESS MODULES -->
 		<module>email-service</module>
 	</modules>
 
@@ -28,6 +36,14 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
 		<dependency>
