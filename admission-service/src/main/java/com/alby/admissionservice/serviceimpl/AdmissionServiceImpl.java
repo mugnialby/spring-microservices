@@ -2,9 +2,13 @@ package com.alby.admissionservice.serviceimpl;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
+import com.alby.admissionservice.producer.PatientProducer;
 import com.alby.admissionservice.util.AdmissionsUtil;
+import com.alby.patientservice.util.PatientsUtil;
+import com.alby.springmicroservices.service.ValidationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -23,7 +27,6 @@ import com.alby.springmicroservices.dto.response.WebResponse;
 import com.alby.admissionservice.entity.Admissions;
 import com.alby.admissionservice.repository.AdmissionRepository;
 import com.alby.admissionservice.service.AdmissionService;
-import com.alby.springmicroservices.service.ValidationService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,6 +37,8 @@ public class AdmissionServiceImpl implements AdmissionService {
     private final AdmissionRepository admissionRepository;
 
     private final ValidationService validationService;
+
+    private final PatientProducer patientProducer;
 
     @Override
     public WebResponse<List<AdmissionResponse>> getAll(AdmissionPagingRequest request) {
@@ -75,8 +80,9 @@ public class AdmissionServiceImpl implements AdmissionService {
     public WebResponse<AdmissionResponse> add(AdmissionAddRequest request) {
         validationService.validate(request);
 
-        // if (admissionRepository.existsByName(request.getName()))
-        //     throw new ResponseStatusException(HttpStatus.CONFLICT);
+        if (null == request.getPatients().getId()) {
+            patientProducer.sendPatientAddMessage(PatientsUtil.mapPatientsToPatientsAddRequest(request.getPatients()));
+        }
 
         Admissions admission = AdmissionsUtil.mapAddRequestToAdmissions(request);
         admissionRepository.save(admission);

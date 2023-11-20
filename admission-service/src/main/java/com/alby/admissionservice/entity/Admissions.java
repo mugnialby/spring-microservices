@@ -2,6 +2,7 @@ package com.alby.admissionservice.entity;
 
 import java.time.Instant;
 
+import com.alby.patientservice.entity.Patients;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -38,6 +39,13 @@ public class Admissions {
     )
     private Long id;
 
+    @OneToOne
+    @PrimaryKeyJoinColumn(
+            name = "id",
+            referencedColumnName = "id"
+    )
+    private Patients patients;
+
     @Default
     private String status = "Y";
 
@@ -54,7 +62,4 @@ public class Admissions {
     @LastModifiedDate
     @Column(name = "modified_at")
     private Instant modifiedAt;
-
-    @OneToOne
-    private Patients patient;
 }

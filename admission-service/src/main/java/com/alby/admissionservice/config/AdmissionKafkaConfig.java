@@ -17,10 +17,18 @@ public class AdmissionKafkaConfig {
     @Value("${kafka.topic.admission.events.partition}")
     private int partitionCount;
 
+    @Value("${kafka.topic.patient.events}")
+    private String patientEvents;
+
     @Bean
     public NewTopic admissionEvents() {
         return TopicBuilder.name(admissionEvents)
             .partitions(partitionCount)
             .build();
+    }
+
+    @Bean
+    public String getPatientEvents() {
+        return patientEvents;
     }
 }

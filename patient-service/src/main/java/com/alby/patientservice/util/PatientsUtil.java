@@ -25,4 +25,11 @@ public class PatientsUtil {
                 .createdBy(request.getCreatedBy())
                 .build();
     }
+
+    public static PatientAddRequest mapPatientsToPatientsAddRequest(Patients request) {
+        return PatientAddRequest.builder()
+                .name(request.getName())
+                .createdBy(request.getCreatedBy())
+                .build();
+    }
 }

@@ -12,10 +12,10 @@ import org.hibernate.validator.constraints.Length;
 @NoArgsConstructor
 @Builder
 public class PatientAddRequest {
-    
-    // @NotBlank
-    // @Length(max = 64)
-    // private String name;
+
+    @NotBlank
+    @Length(max = 128)
+    private String name;
 
     @NotBlank
     @Length(max = 64)

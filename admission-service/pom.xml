@@ -28,6 +28,11 @@
 			<artifactId>spring-microservices</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>com.alby</groupId>
+			<artifactId>patient-service</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.postgresql</groupId>
