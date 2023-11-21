@@ -4,14 +4,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import com.alby.patientservice.entity.Patients;
 import com.alby.patientservice.dto.request.*;
 import com.alby.patientservice.dto.response.PatientResponse;
-import com.alby.patientservice.repository.PatientRepository;
-import com.alby.patientservice.service.PatientService;
+import com.alby.patientservice.dto.response.WebResponse;
+import com.alby.patientservice.service.ValidationService;
 import com.alby.patientservice.util.PatientsUtil;
-import com.alby.springmicroservices.dto.response.WebResponse;
-import com.alby.springmicroservices.service.ValidationService;
+import com.alby.patientservice.entity.Patients;
+import com.alby.patientservice.service.PatientService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -26,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PatientServiceImpl implements PatientService {
 
-    private final PatientRepository PatientRepository;
+    private final com.alby.patientservice.repository.PatientRepository PatientRepository;
 
     private final ValidationService validationService;
 
@@ -69,9 +68,6 @@ public class PatientServiceImpl implements PatientService {
     @Transactional
     public WebResponse<PatientResponse> add(PatientAddRequest request) {
         validationService.validate(request);
-
-        // if (PatientRepository.existsByName(request.getName()))
-        //     throw new ResponseStatusException(HttpStatus.CONFLICT);
 
         Patients Patient = PatientsUtil.mapAddRequestToPatients(request);
         PatientRepository.save(Patient);

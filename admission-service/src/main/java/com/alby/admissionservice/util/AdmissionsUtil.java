@@ -1,7 +1,7 @@
 package com.alby.admissionservice.util;
 
-import com.alby.admissionservice.dto.request.AdmissionAddRequest;
-import com.alby.admissionservice.dto.response.AdmissionResponse;
+import com.alby.admissionservice.dto.request.admissions.AdmissionAddRequest;
+import com.alby.admissionservice.dto.response.admissions.AdmissionResponse;
 import com.alby.admissionservice.entity.Admissions;
 
 import lombok.NoArgsConstructor;

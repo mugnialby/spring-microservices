@@ -1,8 +1,8 @@
 package com.alby.roleservice.util;
 
 import com.alby.roleservice.dto.request.RoleAddRequest;
-import com.alby.roleservice.dto.response.RoleResponse;
 import com.alby.roleservice.entity.Roles;
+import com.alby.roleservice.dto.response.RoleResponse;
 
 import lombok.Builder;
 import lombok.NoArgsConstructor;

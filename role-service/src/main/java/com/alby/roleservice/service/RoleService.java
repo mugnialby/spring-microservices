@@ -8,7 +8,7 @@ import com.alby.roleservice.dto.request.RoleGetRequest;
 import com.alby.roleservice.dto.request.RolePagingRequest;
 import com.alby.roleservice.dto.request.RoleUpdateRequest;
 import com.alby.roleservice.dto.response.RoleResponse;
-import com.alby.springmicroservices.dto.response.WebResponse;
+import com.alby.roleservice.dto.response.WebResponse;
 
 public interface RoleService {
     

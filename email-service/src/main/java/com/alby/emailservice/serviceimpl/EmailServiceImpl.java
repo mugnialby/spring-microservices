@@ -1,7 +1,7 @@
 package com.alby.emailservice.serviceimpl;
 
 import com.alby.emailservice.dto.request.EmailSendRequest;
-import com.alby.springmicroservices.dto.response.WebResponse;
+import com.alby.emailservice.dto.response.WebResponse;
 import com.alby.emailservice.entity.Email;
 import com.alby.emailservice.repository.EmailRepository;
 import com.alby.emailservice.service.EmailService;

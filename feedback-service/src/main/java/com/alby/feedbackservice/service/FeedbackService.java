@@ -4,7 +4,7 @@ import com.alby.feedbackservice.dto.request.FeedbackAddRequest;
 import com.alby.feedbackservice.dto.request.FeedbackGetRequest;
 import com.alby.feedbackservice.dto.request.FeedbackPagingRequest;
 import com.alby.feedbackservice.dto.response.FeedbackResponse;
-import com.alby.springmicroservices.dto.response.WebResponse;
+import com.alby.feedbackservice.dto.response.WebResponse;
 
 import java.util.List;
 

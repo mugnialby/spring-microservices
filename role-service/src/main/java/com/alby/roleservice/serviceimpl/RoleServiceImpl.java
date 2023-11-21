@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import com.alby.roleservice.dto.response.WebResponse;
+import com.alby.roleservice.service.ValidationService;
 import com.alby.roleservice.util.RolesUtil;
-import com.alby.springmicroservices.dto.response.WebResponse;
-import com.alby.springmicroservices.service.ValidationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;

@@ -2,7 +2,7 @@ package com.alby.patientservice.service;
 
 import com.alby.patientservice.dto.request.*;
 import com.alby.patientservice.dto.response.PatientResponse;
-import com.alby.springmicroservices.dto.response.WebResponse;
+import com.alby.patientservice.dto.response.WebResponse;
 
 import java.util.List;
 

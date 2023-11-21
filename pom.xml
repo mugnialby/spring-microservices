@@ -32,7 +32,10 @@
 
 		<!-- STATELESS MODULES -->
 		<module>email-service</module>
-	</modules>
+
+		<!-- TEST MODULES -->
+        <module>message-tester-service</module>
+    </modules>
 
 	<dependencies>
 		<dependency>

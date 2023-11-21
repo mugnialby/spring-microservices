@@ -2,13 +2,16 @@ package com.alby.admissionservice.serviceimpl;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
+import com.alby.admissionservice.dto.response.WebResponse;
+import com.alby.admissionservice.dto.response.admissions.AdmissionResponse;
+import com.alby.admissionservice.entity.Admissions;
 import com.alby.admissionservice.producer.PatientProducer;
+import com.alby.admissionservice.repository.AdmissionRepository;
+import com.alby.admissionservice.service.AdmissionService;
+import com.alby.admissionservice.service.ValidationService;
 import com.alby.admissionservice.util.AdmissionsUtil;
-import com.alby.patientservice.util.PatientsUtil;
-import com.alby.springmicroservices.service.ValidationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -17,16 +20,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.alby.admissionservice.dto.request.AdmissionAddRequest;
-import com.alby.admissionservice.dto.request.AdmissionDeleteRequest;
-import com.alby.admissionservice.dto.request.AdmissionGetRequest;
-import com.alby.admissionservice.dto.request.AdmissionPagingRequest;
-import com.alby.admissionservice.dto.request.AdmissionUpdateRequest;
-import com.alby.admissionservice.dto.response.AdmissionResponse;
-import com.alby.springmicroservices.dto.response.WebResponse;
-import com.alby.admissionservice.entity.Admissions;
-import com.alby.admissionservice.repository.AdmissionRepository;
-import com.alby.admissionservice.service.AdmissionService;
+import com.alby.admissionservice.dto.request.admissions.AdmissionAddRequest;
+import com.alby.admissionservice.dto.request.admissions.AdmissionDeleteRequest;
+import com.alby.admissionservice.dto.request.admissions.AdmissionGetRequest;
+import com.alby.admissionservice.dto.request.admissions.AdmissionPagingRequest;
+import com.alby.admissionservice.dto.request.admissions.AdmissionUpdateRequest;
 
 import lombok.RequiredArgsConstructor;
 
@@ -39,6 +37,8 @@ public class AdmissionServiceImpl implements AdmissionService {
     private final ValidationService validationService;
 
     private final PatientProducer patientProducer;
+
+//    private final
 
     @Override
     public WebResponse<List<AdmissionResponse>> getAll(AdmissionPagingRequest request) {
@@ -79,10 +79,6 @@ public class AdmissionServiceImpl implements AdmissionService {
     @Transactional
     public WebResponse<AdmissionResponse> add(AdmissionAddRequest request) {
         validationService.validate(request);
-
-        if (null == request.getPatients().getId()) {
-            patientProducer.sendPatientAddMessage(PatientsUtil.mapPatientsToPatientsAddRequest(request.getPatients()));
-        }
 
         Admissions admission = AdmissionsUtil.mapAddRequestToAdmissions(request);
         admissionRepository.save(admission);

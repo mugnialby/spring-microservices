@@ -2,7 +2,7 @@ package com.alby.roleservice.controller;
 
 import java.util.List;
 
-import com.alby.springmicroservices.dto.response.WebResponse;
+import com.alby.roleservice.dto.response.WebResponse;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 

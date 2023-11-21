@@ -1,7 +1,7 @@
 package com.alby.emailservice.controller;
 
 import com.alby.emailservice.dto.request.EmailSendRequest;
-import com.alby.springmicroservices.dto.response.WebResponse;
+import com.alby.emailservice.dto.response.WebResponse;
 import com.alby.emailservice.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;

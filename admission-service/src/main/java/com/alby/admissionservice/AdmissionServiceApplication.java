@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
 @EnableJpaAuditing
-@ComponentScan(basePackages = "com.alby.spring-microservices")
 public class AdmissionServiceApplication {
 
 	public static void main(String[] args) {

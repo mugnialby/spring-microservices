@@ -2,7 +2,6 @@ package com.alby.admissionservice.entity;
 
 import java.time.Instant;
 
-import com.alby.patientservice.entity.Patients;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
