@@ -1,4 +1,4 @@
-package com.alby.userservice.dto.request;
+package com.alby.userservice.dto.request.users;
 
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
@@ -6,18 +6,19 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserPagingRequest {
+public class UserDeleteRequest {
     
     @NotNull
-    @Digits(integer = 6, fraction = 0)
-    private Integer page;
+    @Digits(integer = 12, fraction = 0)
+    private Long userId;
 
     @NotNull
-    @Digits(integer = 6, fraction = 0)
-    private Integer pageSize;
+    @Length(max = 64)
+    private String modifiedBy;
 }

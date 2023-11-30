@@ -24,7 +24,7 @@ import lombok.Setter;
 @EntityListeners({
     AuditingEntityListener.class
 })
-public class Users {
+public class UsersEntity {
     
     @Id
     @GeneratedValue(

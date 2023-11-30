@@ -1,7 +1,7 @@
 package com.alby.userservice.util;
 
-import com.alby.userservice.entity.Users;
-import com.alby.userservice.dto.request.UserAddRequest;
+import com.alby.userservice.entity.UsersEntity;
+import com.alby.userservice.dto.request.users.UserAddRequest;
 import com.alby.userservice.dto.response.UserResponse;
 
 import com.alby.userservice.security.BCrypt;
@@ -27,7 +27,7 @@ public class UserUtil {
                 System.currentTimeMillis();
     }
     
-    public static UserResponse mapUserToUserResponse(Users user) {
+    public static UserResponse mapUserToUserResponse(UsersEntity user) {
         return UserResponse.builder()
                 .id(user.getId())
                 .username(user.getUsername())
@@ -39,8 +39,8 @@ public class UserUtil {
                 .build();
     }
 
-    public static Users mapAddRequestToUsers(UserAddRequest request) {
-        return Users.builder()
+    public static UsersEntity mapAddRequestToUsers(UserAddRequest request) {
+        return UsersEntity.builder()
                 .username(request.getUsername())
                 .password(BCrypt.hashpw(request.getPassword(), BCrypt.gensalt()))
                 .firstName(request.getFirstName())

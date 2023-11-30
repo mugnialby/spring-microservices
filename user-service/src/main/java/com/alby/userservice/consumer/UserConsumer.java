@@ -1,28 +1,43 @@
 package com.alby.userservice.consumer;
 
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.support.KafkaHeaders;
-import org.springframework.messaging.handler.annotation.Header;
-import org.springframework.stereotype.Service;
 
 @Slf4j
-@Service
-@NoArgsConstructor
+//@Service
+//@RequiredArgsConstructor
 public class UserConsumer {
 
-    @KafkaListener(
-            topics = "user.events"
-    )
+//    private final UserService userService;
+//
+//    private final ObjectMapper objectMapper;
+//
+//    private final UserProducer userProducer;
+
+//    @KafkaListener(
+//            topics = "user.events"
+//    )
     public void consume(
-            @Header(KafkaHeaders.CORRELATION_ID) String correlationId,
-            @Header(KafkaHeaders.KEY) String messageKey,
-            String message
+//            @Header(KafkaHeaders.CORRELATION_ID) String correlationId,
+//            @Header(KafkaHeaders.RECEIVED_KEY) String receivedMessageKey,
+//            String message
     ) {
-        log.info(String.format("Event Type received -> %s | Message key received -> %s | Message received -> %s",
-                correlationId, messageKey, message));
-//        Consumer<String> handler = userEventHandlers.getOrDefault(eventType, this::handleUnknownEvent);
-//        handler.accept(message);
+//        if (receivedMessageKey.contains("loginRequest")) {
+//            LoginRequest request;
+//            try {
+//                request = objectMapper.readValue(message, LoginRequest.class);
+//            } catch (JsonProcessingException e) {
+//                throw new RuntimeException(e);
+//            }
+//
+//            try {
+//                userProducer.produce(
+//                        objectMapper.writeValueAsString(userService.getByUserNameAndPassword(request)),
+//                        "loginRequest",
+//                        correlationId
+//                );
+//            } catch (Exception e) {
+//
+//            }
+//        }
     }
 }

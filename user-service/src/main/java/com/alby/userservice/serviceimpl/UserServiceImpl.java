@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import com.alby.userservice.dto.request.login.LoginRequest;
+import com.alby.userservice.dto.request.users.*;
 import com.alby.userservice.dto.response.UserResponse;
 import com.alby.userservice.dto.response.WebResponse;
-import com.alby.userservice.entity.Users;
+import com.alby.userservice.entity.UsersEntity;
 import com.alby.userservice.service.ValidationService;
 import com.alby.userservice.util.UserUtil;
 import com.alby.userservice.security.BCrypt;
@@ -18,11 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.alby.userservice.dto.request.UserAddRequest;
-import com.alby.userservice.dto.request.UserDeleteRequest;
-import com.alby.userservice.dto.request.UserGetRequest;
-import com.alby.userservice.dto.request.UserPagingRequest;
-import com.alby.userservice.dto.request.UserUpdateRequest;
 import com.alby.userservice.repository.UserRepository;
 import com.alby.userservice.service.UserService;
 
@@ -40,7 +37,7 @@ public class UserServiceImpl implements UserService {
     public WebResponse<List<UserResponse>> getAll(UserPagingRequest request) {
         validationService.validate(request);
 
-        Page<Users> users = userRepository.findAll(
+        Page<UsersEntity> users = userRepository.findAll(
             PageRequest.of(
                 request.getPage(),
                 request.getPageSize(),
@@ -72,6 +69,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public WebResponse<UserResponse> findByCredential(String username, String password) {
+        return WebResponse.<UserResponse> builder()
+                .message("OK")
+                .data(userRepository.findByUsernameAndPassword(username, password)
+                        .map(UserUtil::mapUserToUserResponse)
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)))
+                .build();
+    }
+
+    @Override
     @Transactional
     public WebResponse<UserResponse> add(UserAddRequest request) {
         validationService.validate(request);
@@ -79,7 +86,7 @@ public class UserServiceImpl implements UserService {
         if (userRepository.existsByUsername(request.getUsername()))
             throw new ResponseStatusException(HttpStatus.CONFLICT);
 
-        Users user = UserUtil.mapAddRequestToUsers(request);
+        UsersEntity user = UserUtil.mapAddRequestToUsers(request);
         userRepository.save(user);
 
         return WebResponse.<UserResponse> builder()
@@ -93,7 +100,7 @@ public class UserServiceImpl implements UserService {
     public WebResponse<UserResponse> update(UserUpdateRequest request) {
         validationService.validate(request);
         
-        Users userFromDb = userRepository.findById(request.getUserId())
+        UsersEntity userFromDb = userRepository.findById(request.getUserId())
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
             
         if (Objects.nonNull(request.getUsername())) {
@@ -138,7 +145,7 @@ public class UserServiceImpl implements UserService {
     public WebResponse<String> delete(UserDeleteRequest request) {
         validationService.validate(request);
 
-        Users user = userRepository.findById(request.getUserId())
+        UsersEntity user = userRepository.findById(request.getUserId())
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         user.setStatus("N");
@@ -149,5 +156,5 @@ public class UserServiceImpl implements UserService {
                 .message("OK")
                 .build();
     }
-    
+
 }

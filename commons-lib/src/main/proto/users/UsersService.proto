@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package com.alby.commonslib.proto.users;
+
+option java_multiple_files = true;
+option java_package = "com.alby.commonslib.proto.users";
+option java_outer_classname = "UsersServiceProto";
+
+service UsersService {
+  rpc findByCredential(LoginRequest) returns (Users);
+}
+
+message LoginRequest {
+  sint64 id = 1;
+  string username = 2;
+  string firstName = 3;
+  string lastName = 4;
+  string email = 5;
+  sint64 managerId = 6;
+  string status = 7;
+}
+
+message Users {
+  string username = 1;
+  string password = 2;
+}

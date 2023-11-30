@@ -1,4 +1,4 @@
-package com.alby.userservice.dto.request;
+package com.alby.userservice.dto.request.users;
 
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
@@ -11,9 +11,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserGetRequest {
+public class UserPagingRequest {
     
     @NotNull
-    @Digits(integer = 12, fraction = 0)
-    private Long userId;
+    @Digits(integer = 6, fraction = 0)
+    private Integer page;
+
+    @NotNull
+    @Digits(integer = 6, fraction = 0)
+    private Integer pageSize;
 }

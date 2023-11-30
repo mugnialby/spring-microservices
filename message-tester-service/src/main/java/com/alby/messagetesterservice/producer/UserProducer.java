@@ -20,7 +20,7 @@ public class UserProducer {
         Message<String> message = MessageBuilder
                 .withPayload(jsonData)
                 .setHeader(KafkaHeaders.TOPIC,"user.events")
-                .setHeader(KafkaHeaders.CORRELATION_ID, MessageTesterUtil.getCorrelationId())
+                .setHeader(KafkaHeaders.CORRELATION_ID, "tes123")
                 .setHeader(KafkaHeaders.KEY, messageKey)
                 .build();
 

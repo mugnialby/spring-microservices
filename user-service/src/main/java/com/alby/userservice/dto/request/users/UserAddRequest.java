@@ -1,6 +1,8 @@
-package com.alby.userservice.dto.request;
+package com.alby.userservice.dto.request.users;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,29 +13,26 @@ import org.hibernate.validator.constraints.Length;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserUpdateRequest {
-
-    @NotNull
-    @Digits(integer = 12, fraction = 0)
-    private Long userId;
+public class UserAddRequest {
     
+    @NotBlank
     @Length(max = 64)
     private String username;
 
+    @NotBlank
     @Length(max = 128)
     private String password;
 
+    @NotBlank
     @Length(max = 128)
     private String firstName;
 
     @Length(max = 128)
     private String lastName;
 
+    @NotBlank
     @Length(max = 64)
     private String email;
-
-    @Length(max = 1)
-    private String status;
 
     @NotNull
     @Digits(integer = 12, fraction = 0)
@@ -41,5 +40,5 @@ public class UserUpdateRequest {
 
     @NotBlank
     @Length(max = 64)
-    private String modifiedBy;
+    private String createdBy;
 }

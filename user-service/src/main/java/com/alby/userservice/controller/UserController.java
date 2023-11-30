@@ -2,16 +2,13 @@ package com.alby.userservice.controller;
 
 import java.util.List;
 
+import com.alby.userservice.dto.request.login.LoginRequest;
+import com.alby.userservice.dto.request.users.*;
 import com.alby.userservice.dto.response.UserResponse;
 import com.alby.userservice.dto.response.WebResponse;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import com.alby.userservice.dto.request.UserAddRequest;
-import com.alby.userservice.dto.request.UserDeleteRequest;
-import com.alby.userservice.dto.request.UserGetRequest;
-import com.alby.userservice.dto.request.UserPagingRequest;
-import com.alby.userservice.dto.request.UserUpdateRequest;
 import com.alby.userservice.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -36,6 +33,17 @@ public class UserController {
     )
     public WebResponse<UserResponse> get(@ModelAttribute UserGetRequest request) {
         return userService.get(request);
+    }
+
+    @GetMapping(
+            path = "/findByCredential",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public WebResponse<UserResponse> findByCredential(
+            @RequestParam("username") String username,
+            @RequestParam("password") String password
+    ) {
+        return userService.findByCredential(username, password);
     }
     
     @PostMapping(

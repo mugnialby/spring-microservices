@@ -13,8 +13,17 @@
 	<description>Backend User Service Utilizing Spring Boot</description>
 	<properties>
 		<java.version>21</java.version>
+		<net.devh.grpc.server.version>2.15.0.RELEASE</net.devh.grpc.server.version>
+		<net.devh.grpc.client.version>2.15.0.RELEASE</net.devh.grpc.client.version>
 	</properties>
 	<dependencies>
+		<!-- COMMONS LIB-->
+		<dependency>
+			<groupId>com.alby</groupId>
+			<artifactId>commons-lib</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -22,6 +31,18 @@
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>
 			<artifactId>spring-kafka</artifactId>
+		</dependency>
+
+		<!-- gRPC -->
+		<dependency>
+			<groupId>net.devh</groupId>
+			<artifactId>grpc-server-spring-boot-starter</artifactId>
+			<version>${net.devh.grpc.server.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.devh</groupId>
+			<artifactId>grpc-client-spring-boot-starter</artifactId>
+			<version>${net.devh.grpc.client.version}</version>
 		</dependency>
 
 		<dependency>
