@@ -27,7 +27,5 @@ public class UsersGrpcServiceImpl extends UsersServiceGrpc.UsersServiceImplBase 
 
          UsersEntity usersFromDb = userRepository.findByUsername(request.getUsername())
                  .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
-         usersFromDb
     }
 }
