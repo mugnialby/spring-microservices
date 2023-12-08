@@ -53,6 +53,8 @@ public class UsersEntity {
     @Column(name = "manager_id")
     private Long managerId;
 
+    private String salt;
+
     @Default
     private String status = "Y";
 

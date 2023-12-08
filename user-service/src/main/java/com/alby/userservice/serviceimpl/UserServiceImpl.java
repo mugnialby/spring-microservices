@@ -87,6 +87,7 @@ public class UserServiceImpl implements UserService {
             throw new ResponseStatusException(HttpStatus.CONFLICT);
 
         UsersEntity user = UserUtil.mapAddRequestToUsers(request);
+        user.setSalt(BCrypt.gensalt());
         userRepository.save(user);
 
         return WebResponse.<UserResponse> builder()
