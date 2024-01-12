@@ -15,5 +15,5 @@ public class RoleResponse {
 
     private String roleName;
 
-    private String status;
+    private boolean status;
 }

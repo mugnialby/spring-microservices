@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.alby.roleservice.dto.request.RoleAddRequest;
+import com.alby.roleservice.dto.request.RoleSaveRequest;
 import com.alby.roleservice.dto.request.RoleDeleteRequest;
 import com.alby.roleservice.dto.request.RoleGetRequest;
 import com.alby.roleservice.dto.request.RolePagingRequest;
@@ -72,18 +72,15 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     @Transactional
-    public WebResponse<RoleResponse> add(RoleAddRequest request) {
+    public WebResponse<String> save(RoleSaveRequest request) {
         validationService.validate(request);
 
         if (roleRepository.existsByRoleName(request.getRoleName()))
-            throw new ResponseStatusException(HttpStatus.CONFLICT);
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "role tersebut sudah ada");
+        roleRepository.save(RolesUtil.mapAddRequestToRoles(request));
 
-        Roles role = RolesUtil.mapAddRequestToRoles(request);
-        roleRepository.save(role);
-
-        return WebResponse.<RoleResponse> builder()
+        return WebResponse.<String> builder()
                 .message("OK")
-                .data(RolesUtil.mapRoleToRoleResponse(role))
                 .build();
     }
 
@@ -93,21 +90,15 @@ public class RoleServiceImpl implements RoleService {
         validationService.validate(request);
         
         Roles roleFromDb = roleRepository.findById(request.getId())
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-            
-        if (Objects.nonNull(request.getRoleName())) {
-            if (!request.getRoleName().equalsIgnoreCase(roleFromDb.getRoleName())
-                && roleRepository.existsByRoleName(request.getRoleName())) {
-                throw new ResponseStatusException(HttpStatus.CONFLICT);
-            }
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Data tidak ditemukan"));
 
-            roleFromDb.setRoleName(request.getRoleName());
-        }
-    
-        if (Objects.nonNull(request.getStatus())) {
-            roleFromDb.setStatus(request.getStatus());
+        if (!request.getRoleName().equalsIgnoreCase(roleFromDb.getRoleName())
+            && roleRepository.existsByRoleNameAndIdNot(request.getRoleName(), request.getId())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Role Name sudah ada");
         }
 
+        roleFromDb.setRoleName(request.getRoleName());
+        roleFromDb.setStatus(request.isStatus() ? "Y" : "N");
         roleRepository.save(roleFromDb);
 
         return WebResponse.<RoleResponse> builder()
@@ -118,19 +109,19 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     @Transactional
-    public WebResponse<String> delete(RoleDeleteRequest request) {
-        validationService.validate(request);
+    public WebResponse<String> delete(Long id) {
+        if (null != id && 0 != id) {
+            roleRepository.findById(id)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "data tidak ditemukan"));
 
-        Roles role = roleRepository.findById(request.getId())
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            roleRepository.deleteById(id);
 
-        role.setStatus("N");
-        role.setModifiedBy(request.getModifiedBy());
-        roleRepository.save(role);
-
-        return WebResponse.<String> builder()
-                .message("OK")
-                .build();
+            return WebResponse.<String> builder()
+                    .message("OK")
+                    .build();
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "id tidak boleh kosong");
+        }
     }
     
 }

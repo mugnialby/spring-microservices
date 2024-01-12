@@ -11,16 +11,16 @@ import org.springframework.kafka.config.TopicBuilder;
 @NoArgsConstructor
 public class RoleKafkaConfig {
 
-    @Value("${kafka.topic.role.events}")
-    private String roleEvents;
+//    @Value("${kafka.topic.role.events}")
+//    private String roleEvents;
 
-    @Value("${kafka.topic.role.events.partition}")
-    private int partitionCount;
+//    @Value("${kafka.topic.role.events.partition}")
+//    private int partitionCount;
 
-    @Bean
-    public NewTopic roleEvents() {
-        return TopicBuilder.name(roleEvents)
-            .partitions(partitionCount)
-            .build();
-    }
+//    @Bean
+//    public NewTopic roleEvents() {
+//        return TopicBuilder.name(roleEvents)
+//            .partitions(partitionCount)
+//            .build();
+//    }
 }

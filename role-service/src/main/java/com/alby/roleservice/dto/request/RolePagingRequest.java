@@ -12,7 +12,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class RolePagingRequest {
-    
+
+    private String roleName;
+
+    private Boolean status;
+
     @NotNull
     @Digits(integer = 6, fraction = 0)
     private Integer page;

@@ -16,12 +16,11 @@ public class RoleUpdateRequest {
     @NotNull
     @Digits(integer = 12, fraction = 0)
     private Long id;
-    
+
     @Length(max = 64)
     private String roleName;
 
-    @Length(max = 1)
-    private String status;
+    private boolean status;
 
     @NotBlank
     @Length(max = 64)

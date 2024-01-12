@@ -6,7 +6,7 @@ import com.alby.roleservice.dto.response.WebResponse;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import com.alby.roleservice.dto.request.RoleAddRequest;
+import com.alby.roleservice.dto.request.RoleSaveRequest;
 import com.alby.roleservice.dto.request.RoleDeleteRequest;
 import com.alby.roleservice.dto.request.RoleGetRequest;
 import com.alby.roleservice.dto.request.RolePagingRequest;
@@ -22,40 +22,48 @@ import lombok.RequiredArgsConstructor;
 public class RoleController {
     
     private final RoleService roleService;
-    
+
+    @CrossOrigin
     @GetMapping(
         produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public WebResponse<List<RoleResponse>> getAll(@ModelAttribute RolePagingRequest request) {
+    public WebResponse<List<RoleResponse>> findAll(RolePagingRequest request) {
         return roleService.getAll(request);
     }
-    
+
+    @CrossOrigin
     @GetMapping(
         path = "/find",
         produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public WebResponse<RoleResponse> get(@ModelAttribute RoleGetRequest request) {
+    public WebResponse<RoleResponse> find(RoleGetRequest request) {
         return roleService.get(request);
     }
-    
+
+    @CrossOrigin
     @PostMapping(
-        produces = MediaType.APPLICATION_JSON_VALUE
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public WebResponse<RoleResponse> add(@RequestBody RoleAddRequest request) {
-        return roleService.add(request);
+    public WebResponse<String> save(@RequestBody RoleSaveRequest request) {
+        return roleService.save(request);
     }
-    
+
+    @CrossOrigin
     @PutMapping(
-        produces = MediaType.APPLICATION_JSON_VALUE
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE
     )
     public WebResponse<RoleResponse> update(@RequestBody RoleUpdateRequest request) {
         return roleService.update(request);
     }
-    
+
+    @CrossOrigin
     @DeleteMapping(
-        produces = MediaType.APPLICATION_JSON_VALUE
+            path = "/{id}",
+            produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public WebResponse<String> delete(@RequestBody RoleDeleteRequest request) {
-        return roleService.delete(request);
+    public WebResponse<String> delete(@PathVariable Long id) {
+        return roleService.delete(id);
     }
 }

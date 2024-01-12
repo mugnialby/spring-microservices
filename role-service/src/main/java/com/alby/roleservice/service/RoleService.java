@@ -2,7 +2,7 @@ package com.alby.roleservice.service;
 
 import java.util.List;
 
-import com.alby.roleservice.dto.request.RoleAddRequest;
+import com.alby.roleservice.dto.request.RoleSaveRequest;
 import com.alby.roleservice.dto.request.RoleDeleteRequest;
 import com.alby.roleservice.dto.request.RoleGetRequest;
 import com.alby.roleservice.dto.request.RolePagingRequest;
@@ -16,9 +16,9 @@ public interface RoleService {
 
     WebResponse<RoleResponse> get(RoleGetRequest request);
 
-    WebResponse<RoleResponse> add(RoleAddRequest request);
+    WebResponse<String> save(RoleSaveRequest request);
 
     WebResponse<RoleResponse> update(RoleUpdateRequest request);
 
-    WebResponse<String> delete(RoleDeleteRequest request);
+    WebResponse<String> delete(Long id);
 }

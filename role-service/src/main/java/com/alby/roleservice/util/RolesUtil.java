@@ -1,6 +1,6 @@
 package com.alby.roleservice.util;
 
-import com.alby.roleservice.dto.request.RoleAddRequest;
+import com.alby.roleservice.dto.request.RoleSaveRequest;
 import com.alby.roleservice.entity.Roles;
 import com.alby.roleservice.dto.response.RoleResponse;
 
@@ -16,11 +16,11 @@ public class RolesUtil {
         return RoleResponse.builder()
                 .id(role.getId())
                 .roleName(role.getRoleName())
-                .status(role.getStatus())
+                .status("Y".equals(role.getStatus()))
                 .build();
     }
 
-    public static Roles mapAddRequestToRoles(RoleAddRequest request) {
+    public static Roles mapAddRequestToRoles(RoleSaveRequest request) {
         return Roles.builder()
                 .roleName(request.getRoleName())
                 .createdBy(request.getCreatedBy())

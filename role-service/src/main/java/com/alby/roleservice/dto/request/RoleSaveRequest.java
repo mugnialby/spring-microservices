@@ -11,7 +11,7 @@ import org.hibernate.validator.constraints.Length;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RoleAddRequest {
+public class RoleSaveRequest {
     
     @NotBlank
     @Length(max = 64)

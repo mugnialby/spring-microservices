@@ -19,7 +19,20 @@ public class ValidationServiceImpl implements ValidationService {
     @Override
     public void validate(Object request) {
         Set<ConstraintViolation<Object>> constraintViolations = validator.validate(request);
-        if (!constraintViolations.isEmpty()) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        if (!constraintViolations.isEmpty()) {
+            StringBuilder message = new StringBuilder();
+            for (ConstraintViolation<Object> violation: constraintViolations) {
+                message.append(new StringBuilder()
+                                .append(violation.getPropertyPath()
+                                        .toString()
+                                        .toLowerCase())
+                                .append(" ")
+                                .append(violation.getMessage()))
+                        .append("\n");
+            }
+
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, message.toString());
+        }
     }
     
 }
