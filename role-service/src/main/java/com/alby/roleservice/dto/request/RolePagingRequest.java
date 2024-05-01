@@ -15,7 +15,7 @@ public class RolePagingRequest {
 
     private String roleName;
 
-    private Boolean status;
+    private String status;
 
     @NotNull
     @Digits(integer = 6, fraction = 0)

@@ -6,10 +6,12 @@ import java.util.stream.Collectors;
 
 import com.alby.roleservice.dto.response.WebResponse;
 import com.alby.roleservice.service.ValidationService;
+import com.alby.roleservice.spesification.RoleSpecification;
 import com.alby.roleservice.util.RolesUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,13 +41,21 @@ public class RoleServiceImpl implements RoleService {
     public WebResponse<List<RoleResponse>> getAll(RolePagingRequest request) {
         validationService.validate(request);
 
+        Specification<Roles> specification = Specification.where(null);
+
+        if (null != request.getRoleName() && !request.getRoleName().isBlank())
+            specification.and(RoleSpecification.hasRoleName(request.getRoleName()));
+
+        if(null != request.getStatus() && !request.getStatus().isBlank())
+            specification.and(RoleSpecification.hasStatus(request.getStatus()));
+
         Page<Roles> roles = roleRepository.findAll(
-            PageRequest.of(
-                request.getPage(),
-                request.getPageSize(),
-                Sort.by("roleName")
-                    .ascending()
-            ));
+                specification,
+                PageRequest.of(
+                        request.getPage(),
+                        request.getPageSize(),
+                        Sort.by("roleName").ascending())
+        );
 
         List<RoleResponse> roleResponses = roles
             .stream()
