@@ -4,6 +4,7 @@ import com.alby.authservice.dto.request.LoginRequest;
 import com.alby.authservice.dto.request.VerifyTokenRequest;
 import com.alby.authservice.dto.response.WebResponse;
 import com.alby.authservice.service.AuthService;
+import com.alby.authservice.service.ValidationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/auth")
 public class AuthController {
 
+    private final ValidationService validationService;
+
     private final AuthService authService;
 
     @PostMapping(
@@ -26,6 +29,7 @@ public class AuthController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public WebResponse<String> login(@RequestBody LoginRequest request) {
+        validationService.validate(request);
         return authService.login(request);
     }
 
@@ -35,6 +39,7 @@ public class AuthController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public WebResponse<String> verify(@RequestBody VerifyTokenRequest request) {
+        validationService.validate(request);
         return authService.verify(request);
     }
 }

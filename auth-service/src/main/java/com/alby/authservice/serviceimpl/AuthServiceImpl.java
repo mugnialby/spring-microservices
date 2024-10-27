@@ -16,19 +16,11 @@ import org.springframework.web.server.ResponseStatusException;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-    private final ValidationService validationService;
-
     private final JwtService jwtService;
 
     @Override
     public WebResponse<String> login(LoginRequest request) {
-        validationService.validate(request);
 
-//        WebResponse<UserResponse> userResponse =
-
-//        if (null == userResponse) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-//        }
 
         return WebResponse.<String> builder()
                 .message("OK")
@@ -40,8 +32,6 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public WebResponse<String> verify(VerifyTokenRequest request) {
-        validationService.validate(request);
-
         if (!jwtService.validateToken(request.getToken())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }

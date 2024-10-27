@@ -8,7 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +22,13 @@ public class ValidationServiceImpl implements ValidationService {
     @Override
     public void validate(Object request) {
         Set<ConstraintViolation<Object>> constraintViolations = validator.validate(request);
-        if (!constraintViolations.isEmpty()) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        if (!constraintViolations.isEmpty()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    constraintViolations.stream()
+                            .map(ConstraintViolation::getMessage)
+                            .collect(Collectors.joining(", "))
+            );
+        }
     }
-    
 }
