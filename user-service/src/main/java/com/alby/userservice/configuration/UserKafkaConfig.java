@@ -1,4 +1,4 @@
-package com.alby.userservice.config;
+package com.alby.userservice.configuration;
 
 import lombok.NoArgsConstructor;
 

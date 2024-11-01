@@ -12,40 +12,25 @@
     <artifactId>auth-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>auth-service</name>
-    <description>Backend User Service Utilizing Spring Boot</description>
+    <description>Authentication Service which will provide authentication to accessing other services</description>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <net.devh.grpc.server.version>2.15.0.RELEASE</net.devh.grpc.server.version>
-        <net.devh.grpc.client.version>2.15.0.RELEASE</net.devh.grpc.client.version>
     </properties>
 
     <dependencies>
-        <!-- COMMONS LIB-->
-        <dependency>
-            <groupId>com.alby</groupId>
-            <artifactId>commons-lib</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
+        <!-- SPRING -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
 
-        <!-- gRPC -->
-        <dependency>
-            <groupId>net.devh</groupId>
-            <artifactId>grpc-server-spring-boot-starter</artifactId>
-            <version>${net.devh.grpc.server.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.devh</groupId>
-            <artifactId>grpc-client-spring-boot-starter</artifactId>
-            <version>${net.devh.grpc.client.version}</version>
-        </dependency>
 
         <!-- JWT -->
         <dependency>
@@ -66,9 +51,15 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- TEST -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-rabbit-test</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

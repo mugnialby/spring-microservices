@@ -36,7 +36,6 @@
 		<!-- TEST MODULES -->
         <module>message-tester-service</module>
         <module>auth-service</module>
-        <module>commons-lib</module>
     </modules>
 
 	<dependencies>

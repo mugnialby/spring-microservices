@@ -11,56 +11,26 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>user-service</name>
 	<description>Backend User Service Utilizing Spring Boot</description>
-	<properties>
-		<java.version>21</java.version>
-		<net.devh.grpc.server.version>2.15.0.RELEASE</net.devh.grpc.server.version>
-		<net.devh.grpc.client.version>2.15.0.RELEASE</net.devh.grpc.client.version>
-	</properties>
-	<dependencies>
-		<!-- COMMONS LIB-->
-<!--		<dependency>-->
-<!--			<groupId>com.alby</groupId>-->
-<!--			<artifactId>commons-lib</artifactId>-->
-<!--			<version>0.0.1-SNAPSHOT</version>-->
-<!--		</dependency>-->
 
+	<properties>
+		<java.version>
+			21
+		</java.version>
+	</properties>
+
+	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
 		</dependency>
 <!--		<dependency>-->
 <!--			<groupId>org.springframework.kafka</groupId>-->
 <!--			<artifactId>spring-kafka</artifactId>-->
 <!--		</dependency>-->
-
-		<!-- gRPC -->
-<!--		<dependency>-->
-<!--			<groupId>net.devh</groupId>-->
-<!--			<artifactId>grpc-server-spring-boot-starter</artifactId>-->
-<!--			<version>${net.devh.grpc.server.version}</version>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>net.devh</groupId>-->
-<!--			<artifactId>grpc-client-spring-boot-starter</artifactId>-->
-<!--			<version>${net.devh.grpc.client.version}</version>-->
-<!--		</dependency>-->
-
-		<dependency>
-			<groupId>io.grpc</groupId>
-			<artifactId>grpc-netty</artifactId>
-			<version>1.53.0</version>
-		</dependency>
-		<dependency>
-			<groupId>io.grpc</groupId>
-			<artifactId>grpc-protobuf</artifactId>
-			<version>1.53.0</version>
-		</dependency>
-		<dependency>
-			<groupId>io.grpc</groupId>
-			<artifactId>grpc-stub</artifactId>
-			<version>1.53.0</version>
-		</dependency>
-
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -71,6 +41,13 @@
 <!--			<artifactId>spring-kafka-test</artifactId>-->
 <!--			<scope>test</scope>-->
 <!--		</dependency>-->
+
+		<!-- TEST -->
+		<dependency>
+			<groupId>org.springframework.amqp</groupId>
+			<artifactId>spring-rabbit-test</artifactId>
+			<scope>test</scope>
+		</dependency>
     </dependencies>
 
 	<build>

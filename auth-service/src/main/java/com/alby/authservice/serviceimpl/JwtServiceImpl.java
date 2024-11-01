@@ -1,6 +1,6 @@
 package com.alby.authservice.serviceimpl;
 
-import com.alby.authservice.config.jwt.JwtConfig;
+import com.alby.authservice.configuration.jwt.JwtConfig;
 import com.alby.authservice.service.JwtService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

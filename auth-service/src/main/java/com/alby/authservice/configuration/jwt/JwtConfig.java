@@ -1,6 +1,5 @@
-package com.alby.authservice.config.jwt;
+package com.alby.authservice.configuration.jwt;
 
-import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
