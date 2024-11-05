@@ -3,8 +3,10 @@ package com.alby.authservice.serviceimpl;
 import com.alby.authservice.configuration.rabbitmq.RabbitMQConfiguration;
 import com.alby.authservice.dto.request.LoginRequest;
 import com.alby.authservice.dto.request.VerifyTokenRequest;
+import com.alby.authservice.dto.response.LoginResponse;
+import com.alby.authservice.dto.response.UserResponse;
 import com.alby.authservice.dto.response.WebResponse;
-import com.alby.authservice.producer.RMQAuthRequestProducer;
+import com.alby.authservice.producer.RabbitMQAuthRequestProducer;
 import com.alby.authservice.service.AuthService;
 import com.alby.authservice.service.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -18,31 +20,34 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
-
     private final JwtService jwtService;
 
-    private final RMQAuthRequestProducer authRequestProducer;
+    private final RabbitMQAuthRequestProducer authRequestProducer;
 
     private final RabbitMQConfiguration rabbitMQConfiguration;
 
     @Override
-    public WebResponse<String> login(LoginRequest request) {
-//        Map<String, Object> message = new HashMap<>();
-//        message.put("username", request.getUsername());
-//        message.put("password", request.getPassword());
-//
-//        Map<String, Object> response = authRequestProducer.sendAuthenticationRequest(
-//                rabbitMQConfiguration.getRabbitMQExchangeAuthenticate(),
-//                rabbitMQConfiguration.getRabbitMQQueueAuthenticateRequest(),
-//                message
-//        );
-//
-//        if (response == null) {
-//            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
-//        }
+    public WebResponse<LoginResponse> login(LoginRequest request) {
+        Map<String, Object> message = new HashMap<>();
+        message.put("username", request.getUsername());
+        message.put("password", request.getPassword());
 
-        return WebResponse.<String> builder()
+        UserResponse userResponse = authRequestProducer.sendAuthenticationRequest(
+                rabbitMQConfiguration.getRabbitMQQueueAuthenticateRequest(),
+                message
+        );
+
+        if (userResponse == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
+
+        LoginResponse loginResponse = LoginResponse.builder()
+                .token(jwtService.generateToken(userResponse.getUsername()))
+                .build();
+
+        return WebResponse.<LoginResponse> builder()
                 .message("OK")
+                .data(loginResponse)
                 .build();
     }
 

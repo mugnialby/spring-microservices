@@ -34,17 +34,6 @@ public class UserController {
     public WebResponse<UserResponse> get(@ModelAttribute UserGetRequest request) {
         return userService.get(request);
     }
-
-    @GetMapping(
-            path = "/findByCredential",
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
-    public WebResponse<UserResponse> findByCredential(
-            @RequestParam("username") String username,
-            @RequestParam("password") String password
-    ) {
-        return userService.findByCredential(username, password);
-    }
     
     @PostMapping(
         produces = MediaType.APPLICATION_JSON_VALUE

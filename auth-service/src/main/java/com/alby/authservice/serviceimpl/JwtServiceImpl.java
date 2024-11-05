@@ -37,18 +37,31 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public String getUsernameFromToken(String token) {
-        try {
-            return Jwts.parser()
-                    .verifyWith(jwtConfig.getSecretKey())
-                    .build()
-                    .parseSignedClaims(token)
-                    .getPayload()
-                    .getSubject();
-        } catch (Exception e) {
-            return null;
-        }
+    public String extractUsername(String token) {
+        return extract
     }
+
+    @Override
+    public Instant extractExpiration(String token) {
+        return null;
+    }
+
+    private <T> T extractClaims(String token, )
+
+
+//    @Override
+//    public String getUsernameFromToken(String token) {
+//        try {
+//            return Jwts.parser()
+//                    .verifyWith(jwtConfig.getSecretKey())
+//                    .build()
+//                    .parseSignedClaims(token)
+//                    .getPayload()
+//                    .getSubject();
+//        } catch (Exception e) {
+//            return null;
+//        }
+//    }
 
     @Override
     public boolean validateToken(String token) {

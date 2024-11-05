@@ -1,11 +1,12 @@
 package com.alby.userservice.configuration;
 
-
 import lombok.Getter;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,14 +23,14 @@ public class RabbitMQConfiguration {
     @Value("${rabbitmq.exchange.authenticate}")
     private String rabbitMQExchangeAuthenticate;
 
-    @Bean
+    @Bean("authenticateRequestQueueBean")
     public Queue authenticateRequestQueue() {
-        return new Queue(rabbitMQQueueAuthenticateRequest);
+        return new Queue(rabbitMQQueueAuthenticateRequest, false);
     }
 
-    @Bean
+    @Bean("authenticateResponseQueueBean")
     public Queue authenticateResponseQueue() {
-        return new Queue(rabbitMQQueueAuthenticateResponse);
+        return new Queue(rabbitMQQueueAuthenticateResponse, false);
     }
 
     @Bean
@@ -38,12 +39,27 @@ public class RabbitMQConfiguration {
     }
 
     @Bean
-    public Binding requestBinding(Queue requestQueue, DirectExchange exchange) {
-        return BindingBuilder.bind(requestQueue).to(exchange).with(rabbitMQQueueAuthenticateRequest);
+    public Binding requestBinding(
+            @Qualifier("authenticateRequestQueueBean") Queue requestQueue,
+            DirectExchange exchange
+    ) {
+        return BindingBuilder.bind(requestQueue)
+                .to(exchange)
+                .with(rabbitMQQueueAuthenticateRequest);
     }
 
     @Bean
-    public Binding responseBinding(Queue responseQueue, DirectExchange exchange) {
-        return BindingBuilder.bind(responseQueue).to(exchange).with(rabbitMQQueueAuthenticateResponse);
+    public Binding responseBinding(
+            @Qualifier("authenticateResponseQueueBean") Queue responseQueue,
+            DirectExchange exchange
+    ) {
+        return BindingBuilder.bind(responseQueue)
+                .to(exchange)
+                .with(rabbitMQQueueAuthenticateResponse);
+    }
+
+    @Bean
+    public Jackson2JsonMessageConverter messageConverter() {
+        return new Jackson2JsonMessageConverter();
     }
 }

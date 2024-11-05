@@ -69,13 +69,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public WebResponse<UserResponse> findByCredential(String username, String password) {
-        return WebResponse.<UserResponse> builder()
-                .message("OK")
-                .data(userRepository.findByUsernameAndPassword(username, password)
-                        .map(UserUtil::mapUserToUserResponse)
-                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)))
-                .build();
+    public UserResponse findByCredential(
+            String username,
+            String password
+    ) {
+        return userRepository.findByUsernameAndPassword(username, password)
+                .map(UserUtil::mapUserToUserResponse)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @Override

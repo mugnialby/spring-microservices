@@ -13,7 +13,7 @@ public interface UserService {
 
     WebResponse<UserResponse> get(UserGetRequest request);
 
-    WebResponse<UserResponse> findByCredential(String username, String password);
+    UserResponse findByCredential(String username, String password);
 
     WebResponse<UserResponse> add(UserAddRequest request);
 

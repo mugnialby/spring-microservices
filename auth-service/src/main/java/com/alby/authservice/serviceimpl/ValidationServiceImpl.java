@@ -26,7 +26,13 @@ public class ValidationServiceImpl implements ValidationService {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
                     constraintViolations.stream()
-                            .map(ConstraintViolation::getMessage)
+                            .map(constraintViolation ->
+                                    new StringBuilder()
+                                            .append(constraintViolation.getPropertyPath())
+                                            .append(" ")
+                                            .append(constraintViolation.getMessage())
+                                            .toString()
+                            )
                             .collect(Collectors.joining(", "))
             );
         }

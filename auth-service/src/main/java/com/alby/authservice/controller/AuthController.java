@@ -2,6 +2,7 @@ package com.alby.authservice.controller;
 
 import com.alby.authservice.dto.request.LoginRequest;
 import com.alby.authservice.dto.request.VerifyTokenRequest;
+import com.alby.authservice.dto.response.LoginResponse;
 import com.alby.authservice.dto.response.WebResponse;
 import com.alby.authservice.service.AuthService;
 import com.alby.authservice.service.ValidationService;
@@ -28,7 +29,7 @@ public class AuthController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public WebResponse<String> login(@RequestBody LoginRequest request) {
+    public WebResponse<LoginResponse> login(@RequestBody LoginRequest request) {
         validationService.validate(request);
         return authService.login(request);
     }
