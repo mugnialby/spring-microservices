@@ -5,8 +5,11 @@ import com.alby.authservice.service.JwtService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -18,6 +21,10 @@ import java.time.temporal.ChronoUnit;
 @RequiredArgsConstructor
 public class JwtServiceImpl implements JwtService {
 
+    @Value("${server.bcrypt.salt}")
+    @Getter
+    private String salt;
+
     private final JwtConfig jwtConfig;
 
     @Override
@@ -27,52 +34,32 @@ public class JwtServiceImpl implements JwtService {
 
         return Jwts.builder()
                 .header()
-                    .add("X-API-KEY", jwtConfig.getApiKey().getEncoded())
-                    .and()
+                .add("X-API-KEY", jwtConfig.getEncodedApiKey().getEncoded())
+                .and()
                 .subject(username)
                 .issuedAt(Date.from(dateNow))
                 .expiration(Date.from(expiryDate))
-                .signWith(jwtConfig.getSecretKey())
+                .signWith(jwtConfig.getEncodedSecretKey())
                 .compact();
     }
 
     @Override
-    public String extractUsername(String token) {
-        return extract
-    }
-
-    @Override
-    public Instant extractExpiration(String token) {
-        return null;
-    }
-
-    private <T> T extractClaims(String token, )
-
-
-//    @Override
-//    public String getUsernameFromToken(String token) {
-//        try {
-//            return Jwts.parser()
-//                    .verifyWith(jwtConfig.getSecretKey())
-//                    .build()
-//                    .parseSignedClaims(token)
-//                    .getPayload()
-//                    .getSubject();
-//        } catch (Exception e) {
-//            return null;
-//        }
-//    }
-
-    @Override
     public boolean validateToken(String token) {
         try {
-            Jws<Claims> jws = Jwts.parser().verifyWith(jwtConfig.getSecretKey()).build().parseSignedClaims(token);
+            Jws<Claims> jws = Jwts.parser()
+                    .verifyWith(jwtConfig.getEncodedSecretKey())
+                    .build()
+                    .parseSignedClaims(token);
 
-            if (null == jws) {
+            if (jws == null) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Token not found");
             }
 
-            if (!jwtConfig.getApiKey().getEncoded().equals(jws.getHeader().get("X-API-KEY"))) {
+            if (jws.getHeader().get("X-API-KEY") == null) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Header is not found");
+            }
+
+            if (!jwtConfig.getApiKey().equals(jws.getHeader().get("X-API-KEY"))) {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Token is invalid");
             }
 
