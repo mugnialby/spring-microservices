@@ -1,0 +1,7 @@
+spring:
+  profiles:
+    active: "dev"
+  application:
+    name: "config-service"
+    admin:
+      enabled: false

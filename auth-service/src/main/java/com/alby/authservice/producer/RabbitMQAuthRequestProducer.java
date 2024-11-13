@@ -19,7 +19,7 @@ public class RabbitMQAuthRequestProducer {
             String routingKey,
             Map<String, Object> messageRequest
     ) {
-        rabbitTemplate.setReplyTimeout(500);
+        rabbitTemplate.setReplyTimeout(1000);
         Map<String, Object> response = (Map<String, Object>) rabbitTemplate.convertSendAndReceive(
                 routingKey,
                 messageRequest

@@ -33,14 +33,4 @@ public class AuthController {
         validationService.validate(request);
         return authService.login(request);
     }
-
-    @PostMapping(
-            path = "/verify",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
-    public WebResponse<String> verify(@RequestBody VerifyTokenRequest request) {
-        validationService.validate(request);
-        return authService.verify(request);
-    }
 }

@@ -36,6 +36,8 @@
 		<!-- TEST MODULES -->
         <module>message-tester-service</module>
         <module>auth-service</module>
+        <module>gateway-service</module>
+        <module>config-service</module>
     </modules>
 
 	<dependencies>

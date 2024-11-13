@@ -25,6 +25,15 @@ public class RabbitMQConfiguration {
     @Value("${rabbitmq.exchange.authenticate}")
     private String rabbitMQExchangeAuthenticate;
 
+    @Value("${rabbitmq.queue.authorization.request}")
+    private String authorizationRequestQueueName;
+
+    @Value("${rabbitmq.queue.authorization.response}")
+    private String authorizationResponseQueueName;
+
+    @Value("${rabbitmq.exchange.authorization}")
+    private String authorizationExchangeName;
+
     @Bean("authenticateRequestQueueBean")
     public Queue authenticateRequestQueue() {
         return new Queue(rabbitMQQueueAuthenticateRequest, false);
@@ -35,15 +44,30 @@ public class RabbitMQConfiguration {
         return new Queue(rabbitMQQueueAuthenticateResponse, false);
     }
 
-    @Bean
+    @Bean("authenticateExchangeBean")
     public DirectExchange authenticateExchange() {
         return new DirectExchange(rabbitMQExchangeAuthenticate);
+    }
+
+    @Bean("authorizationRequestQueueBean")
+    public Queue authorizationRequestQueue() {
+        return new Queue(authorizationRequestQueueName, false);
+    }
+
+    @Bean("authorizationResponseQueueBean")
+    public Queue authorizationResponeQueue() {
+        return new Queue(authorizationResponseQueueName, false);
+    }
+
+    @Bean("authorizationExchangeBean")
+    public DirectExchange authorizationExchange() {
+        return new DirectExchange(authorizationExchangeName);
     }
 
     @Bean
     public Binding requestBinding(
             @Qualifier("authenticateRequestQueueBean") Queue requestQueue,
-            DirectExchange exchange
+            @Qualifier("authenticateExchangeBean") DirectExchange exchange
     ) {
         return BindingBuilder.bind(requestQueue)
                 .to(exchange)
@@ -53,7 +77,7 @@ public class RabbitMQConfiguration {
     @Bean
     public Binding responseBinding(
             @Qualifier("authenticateResponseQueueBean") Queue responseQueue,
-            DirectExchange exchange
+            @Qualifier("authenticateExchangeBean") DirectExchange exchange
     ) {
         return BindingBuilder.bind(responseQueue)
                 .to(exchange)
@@ -61,18 +85,27 @@ public class RabbitMQConfiguration {
     }
 
     @Bean
-    public Jackson2JsonMessageConverter messageConverter() {
-        return new Jackson2JsonMessageConverter();
+    public Binding authorizationRequestBinding(
+            @Qualifier("authorizationRequestQueueBean") Queue requestQueue,
+            @Qualifier("authorizationExchangeBean") DirectExchange exchange
+    ) {
+        return BindingBuilder.bind(requestQueue)
+                .to(exchange)
+                .with(authorizationRequestQueueName);
     }
 
     @Bean
-    public RetryTemplate getRetryTemplate() {
-        RetryTemplate retryTemplate = new RetryTemplate();
-        ExponentialBackOffPolicy exponentialBackOffPolicy = new ExponentialBackOffPolicy();
-        exponentialBackOffPolicy.setInitialInterval(1000);
-        exponentialBackOffPolicy.setMultiplier(2.0);
-        exponentialBackOffPolicy.setMaxInterval(10000);
+    public Binding authorizationResponseBinding(
+            @Qualifier("authorizationResponseQueueBean") Queue responseQueue,
+            @Qualifier("authorizationExchangeBean") DirectExchange exchange
+    ) {
+        return BindingBuilder.bind(responseQueue)
+                .to(exchange)
+                .with(authorizationResponseQueueName);
+    }
 
-        return retryTemplate;
+    @Bean
+    public Jackson2JsonMessageConverter messageConverter() {
+        return new Jackson2JsonMessageConverter();
     }
 }

@@ -1,0 +1,8 @@
+
+spring:
+  profiles:
+    active: dev # ENVIRONMENT
+  application:
+    name: gateway-service
+    admin:
+      enabled: false

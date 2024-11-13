@@ -1,27 +1,33 @@
 # APPLICATION CONFIG
-server.port = 8090
-server.error.include-message=always
+server:
+  port: 7001
+  error:
+    include-message: "always"
+  bcrypt:
+    salt: "$2a$10$XPpFJsWa/UwoSH0Wczxvnu"
+jwt:
+  key:
+    secret: "YjdqN3ZEbGhYanJtODJsUkRKQlZTV0djOTRLWUU0dlY="
+    api: "OXdNMndxY2FXZGpaaXloWWdhbzZJbUxsSzFhaExVR1o="
+  expiration: 1
+spring:
+  rabbitmq:
+    host: "localhost"
+    port: "5672"
+    username: "guest"
+    password: "guest"
 
-# SECURITY
-server.bcrypt.salt = $2a$10$XPpFJsWa/UwoSH0Wczxvnu
-
-# JWT
-jwt.key.secret = YjdqN3ZEbGhYanJtODJsUkRKQlZTV0djOTRLWUU0dlY=
-jwt.key.api = OXdNMndxY2FXZGpaaXloWWdhbzZJbUxsSzFhaExVR1o=
-jwt.expiration = 1
-
-# RABBITMQ CONFIGS
-spring.rabbitmq.host = localhost
-spring.rabbitmq.port = 5672
-spring.rabbitmq.username = guest
-spring.rabbitmq.password = guest
-
-# RABBITMQ QUEUE
-rabbitmq.queue.authenticate.request = authenticate.request.queue
-rabbitmq.queue.authenticate.response = authenticate.response.queue
-
-# RABBITMQ EXCHANGE
-rabbitmq.exchange.authenticate = authenticate.exchange
+rabbitmq:
+  queue:
+    authenticate:
+      request: "authenticate.request.queue"
+      response: "authenticate.response.queue"
+    authorization:
+      request: "authorization.request.queue"
+      response: "authorization.response.queue"
+  exchange:
+    authenticate: "authenticate.exchange"
+    authorization: "authorization.exchange"
 
 # KAFKA CONFIGS
 # CONSUMER

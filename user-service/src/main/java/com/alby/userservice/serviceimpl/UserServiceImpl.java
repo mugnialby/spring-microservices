@@ -31,12 +31,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    private final ValidationService validationService;
-
     @Override
     public WebResponse<List<UserResponse>> getAll(UserPagingRequest request) {
-        validationService.validate(request);
-
         Page<UsersEntity> users = userRepository.findAll(
             PageRequest.of(
                 request.getPage(),
@@ -58,8 +54,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public WebResponse<UserResponse> get(UserGetRequest request) {
-        validationService.validate(request);
-
         return WebResponse.<UserResponse> builder()
             .message("OK")
             .data(userRepository.findById(request.getUserId())
@@ -81,8 +75,6 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public WebResponse<UserResponse> add(UserAddRequest request) {
-        validationService.validate(request);
-
         if (userRepository.existsByUsername(request.getUsername()))
             throw new ResponseStatusException(HttpStatus.CONFLICT);
 
@@ -99,8 +91,6 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public WebResponse<UserResponse> update(UserUpdateRequest request) {
-        validationService.validate(request);
-        
         UsersEntity userFromDb = userRepository.findById(request.getUserId())
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
             
@@ -144,8 +134,6 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public WebResponse<String> delete(UserDeleteRequest request) {
-        validationService.validate(request);
-
         UsersEntity user = userRepository.findById(request.getUserId())
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
@@ -157,5 +145,4 @@ public class UserServiceImpl implements UserService {
                 .message("OK")
                 .build();
     }
-
 }

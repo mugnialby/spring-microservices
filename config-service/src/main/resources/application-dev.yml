@@ -1,0 +1,13 @@
+# APPLICATION CONFIG
+server:
+  port: 7002
+  error:
+    include-message: "always"
+
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: "http://github.com/mugnialby/config-repo"
+          search-paths: '{application}'

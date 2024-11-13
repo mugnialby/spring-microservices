@@ -14,5 +14,5 @@ import org.hibernate.validator.constraints.Length;
 public class VerifyTokenRequest {
 
     @NotBlank
-    private String token;
+    private String authorizationToken;
 }

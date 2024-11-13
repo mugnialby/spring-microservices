@@ -1,0 +1,46 @@
+# APPLICATION CONFIG
+server:
+  port: 7000
+  error:
+    include-message: "always"
+
+resilience4j:
+  retry:
+    instances:
+      myRetry:
+        max-attempts: 3
+        wait-duration: 5s
+
+spring:
+  main:
+    web-application-type: "reactive"
+  cloud:
+    gateway:
+      routes:
+        - id: "auth_service_route"
+          uri: "http://localhost:7001"
+          predicates:
+            - Path=/api/v1/auth/**
+          filters:
+            - name: "CircuitBreaker"
+              args:
+                name: "authCircuitBreaker"
+                fallbackuri: forward:/api/v1/fallback/
+        - id: "user_service_route"
+          uri: "http://localhost:7002"
+          predicates:
+            - Path=/api/v1/users/**
+          filters:
+            - name: "CircuitBreaker"
+              args:
+                name: "userCircuitBreaker"
+                fallbackuri: forward:/api/v1/fallback/
+            - AuthorizationFilter
+
+rabbitmq:
+  queue:
+    authorization:
+      request: "authorization.request.queue"
+      response: "authorization.response.queue"
+  exchange:
+    authorization: "authorization.exchange"

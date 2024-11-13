@@ -9,5 +9,5 @@ public interface AuthService {
 
     WebResponse<LoginResponse> login(LoginRequest loginRequest);
 
-    WebResponse<String> verify(VerifyTokenRequest request);
+    boolean verify(VerifyTokenRequest request);
 }

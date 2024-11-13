@@ -45,20 +45,14 @@ public class AuthServiceImpl implements AuthService {
                 .token(jwtService.generateToken(userResponse.getUsername()))
                 .build();
 
-        return WebResponse.<LoginResponse> builder()
+        return WebResponse.<LoginResponse>builder()
                 .message("OK")
                 .data(loginResponse)
                 .build();
     }
 
     @Override
-    public WebResponse<String> verify(VerifyTokenRequest request) {
-        if (!jwtService.validateToken(request.getToken())) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
-        }
-
-        return WebResponse.<String> builder()
-                .message("OK")
-                .build();
+    public boolean verify(VerifyTokenRequest request) {
+        return jwtService.validateToken(request.getAuthorizationToken());
     }
 }
